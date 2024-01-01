@@ -1,15 +1,14 @@
+// M.Arif Rahman Hakim - 2200018180
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.swing.JFrame;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
 
-public class AppTiketBus extends AppTiketBusPanel {
-    private JPanel AppTiketBusPanel;
-    private JComboBox pilih;
+public class AppTiketBus {
+    private JPanel panelsaya;
+    private JPanel panelkamu;
+    private JComboBox<String> pilih;
     private JCheckBox vip;
     private JCheckBox ekonomi;
     private JCheckBox vvip;
@@ -34,60 +33,21 @@ public class AppTiketBus extends AppTiketBusPanel {
     private JLabel db_total;
     private JLabel db_uangB;
     private JLabel db_uangK;
+    private JPanel panelutama;
+
+
+    private int vipPrice;
+    private int vvipPrice;
+    private int ekonomiPrice;
+    private int executivePrice;
 
 
     public AppTiketBus() {
-        harga = new JTextField();
-        jumlahBel = new JTextField();
-        uangB = new JTextField();
-        uangK = new JTextField();
-        noKursi = new JTextField();
-        namaPenum = new JTextField();
-        total = new JTextField();
-        pilih = new JComboBox<>(new String[]{"pilih jurusan", "Nusa Tenggara Barat", "Bali", "Banyuwangi", "Surabaya", "Jogja", "Jakarta"});
-        vip = new JRadioButton("VIP");
-        vvip = new JRadioButton("VVIP");
-        ekonomi = new JRadioButton("Ekonomi");
-        executive = new JRadioButton("Executive");
-        inputKembaliButton = new JButton("Input Kembali");
-        cetakButton = new JButton("Cetak");
-        keluarButton = new JButton("Keluar");
-        data = new JTextArea();
-
-        // Tambahkan komponen ke panel
-        add(new JLabel("Nomor Kursi"));
-        add(noKursi);
-        add(new JLabel("Nama Penumpang"));
-        add(namaPenum);
-        add(new JLabel("Jumlah Pembelian"));
-        add(jumlahBel);
-        add(new JLabel("Total Harga"));
-        add(total);
-        add(new JLabel("Uang Bayar"));
-        add(uangB);
-        add(new JLabel("Uang Kembali"));
-        add(uangK);
-        add(new JLabel("Pilih Jurusan"));
-        add(pilih);
-        add(new JLabel("Pilih Kelas"));
-        add(vip);
-        add(vvip);
-        add(ekonomi);
-        add(executive);
-        add(inputKembaliButton);
-        add(cetakButton);
-        add(keluarButton);
-        add(new JScrollPane(data));
-
-
-
-
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(vip);
         buttonGroup.add(vvip);
         buttonGroup.add(ekonomi);
         buttonGroup.add(executive);
-
 
         inputKembaliButton.addActionListener(new ActionListener() {
             @Override
@@ -101,182 +61,198 @@ public class AppTiketBus extends AppTiketBusPanel {
                 jumlahBel.setText("");
                 uangB.setText("");
                 uangK.setText("");
-
             }
         });
+
         cetakButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cetakButton.setText((String) pilih.getSelectedItem());
-                data.setText(
-                        "-----------Tiketing Bus-----------"+
-                        "Nomor Kursi     : "+noKursi.getText()+
-                        "Nama Penumpang  : "+namaPenum.getText()+
-                        "Jumlah Pembelian: "+jumlahBel.getText()+
-                        "Total Harga     : "+total.getText()+
-                        "Uang Bayar      : "+uangB.getText()+
-                        "Uang Kembali    : "+uangK.getText());
+                cetakTiket();
             }
         });
-       keluarButton.addActionListener(new ActionListener() {
+
+        keluarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int answer = JOptionPane.showConfirmDialog(null,"Anda Yakin Keluar?","Keluar",JOptionPane.OK_OPTION);
-                if (answer == JOptionPane.OK_OPTION){
-                    System.exit(0);
-                }
-
+                exitApplication();
             }
         });
 
         pilih.addActionListener(new ActionListener() {
-            int vip,vvip,ekonomi,executive;
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (pilih.getSelectedItem().equals("pilih jurusan")){
-                    buttonGroup.clearSelection();
-                    harga.setText("");
-                }
-                else if (pilih.getSelectedItem().equals("Nusa Tenggara Barat")){
-                     vip = 700000;
-                     vvip = 1200000;
-                     ekonomi = 400000;
-                     executive = 650000;
-                }
-                else if (pilih.getSelectedItem().equals("Bali")){
-                    vip = 700000;
-                    vvip = 1200000;
-                    ekonomi = 400000;
-                    executive = 650000;
-                }
-                else if (pilih.getSelectedItem().equals("Banyuwangi")){
-                    vip = 700000;
-                    vvip = 1200000;
-                    ekonomi = 400000;
-                    executive = 650000;
-                }
-                else if (pilih.getSelectedItem().equals("Surabaya")){
-                    vip = 700000;
-                    vvip = 1200000;
-                    ekonomi = 400000;
-                    executive = 650000;
-                }
-                else if (pilih.getSelectedItem().equals("Jogja")){
-                    vip = 700000;
-                    vvip = 1200000;
-                    ekonomi = 400000;
-                    executive = 650000;
-                }
-                else if (pilih.getSelectedItem().equals("Jakarta")){
-                    vip = 700000;
-                    vvip = 1200000;
-                    ekonomi = 400000;
-                    executive = 650000;
-                }
-
+                updateHarga();
             }
         });
+
         vip.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (vip.isSelected()){
-                    harga.setText(String.valueOf(vip));
-                }
-
+                updateHargaText();
             }
         });
+
         vvip.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (vvip.isSelected()){
-                    harga.setText(String.valueOf(vvip));
-                }
-
+                updateHargaText();
             }
         });
+
         ekonomi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (ekonomi.isSelected()){
-                    harga.setText(String.valueOf(ekonomi));
-                }
-
+                updateHargaText();
             }
         });
+
         executive.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (executive.isSelected()){
-                    harga.setText(String.valueOf(executive));
-                }
-
+                updateHargaText();
             }
         });
-//        noKursi.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
-//        namaPenum.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
+
         jumlahBel.addActionListener(new ActionListener() {
-            int t_harga,t_jumlahBel,t_total;
             @Override
             public void actionPerformed(ActionEvent e) {
-                t_harga = Integer.parseInt(harga.getText());
-                t_jumlahBel = Integer.parseInt(jumlahBel.getText());
-                t_total = t_jumlahBel*t_harga;
-                total.setText(String.valueOf(t_total));
+                updateTotal();
             }
         });
-        uangB.addActionListener(new ActionListener() {
-            int t_uangK,t_bayar,t_total;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                t_total = Integer.parseInt(total.getText());
-                t_bayar = Integer.parseInt(uangB.getText());
-                t_uangK = t_bayar-t_total;
-                uangK.setText(String.valueOf(t_uangK));
 
-            }
-        });
         jumlahBel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
-                int a,b,c;
-                a = Integer.valueOf(uangB.getText());
-                b = Integer.valueOf(total.getText());
-                c = a-b;
-                uangK.setText(""+c);
+                updateTotal();
             }
         });
+
+        uangB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateUangKembali();
+            }
+        });
+
         uangB.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
-                int a,b,c;
-                a = Integer.valueOf(harga.getText());
-                b = Integer.valueOf(jumlahBel.getText());
-                c = a*b;
-                total.setText(""+c);
+                updateUangKembali();
             }
         });
-
     }
 
-//    public static void main(String args[]) {
-//        JFrame frame = new JFrame("Aplikasi Tiket Bus");
-//        frame.setContentPane(new AppTiketBus().AppTiketBusPanel);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
+    private void updateHarga() {
+        String jurusan = pilih.getSelectedItem().toString();
 
+        switch (jurusan) {
+            case "Nusa Tenggara Barat":
+                vipPrice = 700000;
+                vvipPrice = 1200000;
+                ekonomiPrice = 400000;
+                executivePrice = 650000;
+                break;
+            case "Bali":
+                vipPrice = 800000;
+                vvipPrice = 1300000;
+                ekonomiPrice = 450000;
+                executivePrice = 700000;
+                break;
+            case "Banyuwangi":
+                vipPrice = 750000;
+                vvipPrice = 1250000;
+                ekonomiPrice = 420000;
+                executivePrice = 680000;
+                break;
+            case "Surabaya":
+                vipPrice = 720000;
+                vvipPrice = 1220000;
+                ekonomiPrice = 410000;
+                executivePrice = 660000;
+                break;
+            case "Jogja":
+                vipPrice = 730000;
+                vvipPrice = 1230000;
+                ekonomiPrice = 415000;
+                executivePrice = 670000;
+                break;
+            case "Jakarta":
+                vipPrice = 740000;
+                vvipPrice = 1240000;
+                ekonomiPrice = 420000;
+                executivePrice = 680000;
+                break;
+            default:
+                vipPrice = 0;
+                vvipPrice = 0;
+                ekonomiPrice = 0;
+                executivePrice = 0;
+                break;
+        }
 
+        updateHargaText();
+    }
+
+    private void updateHargaText() {
+        if (vip.isSelected()) {
+            harga.setText(String.valueOf(vipPrice));
+        } else if (vvip.isSelected()) {
+            harga.setText(String.valueOf(vvipPrice));
+        } else if (ekonomi.isSelected()) {
+            harga.setText(String.valueOf(ekonomiPrice));
+        } else if (executive.isSelected()) {
+            harga.setText(String.valueOf(executivePrice));
+        } else {
+            harga.setText("");
+        }
+    }
+
+    private void updateTotal() {
+        try {
+            int t_harga = Integer.parseInt(harga.getText());
+            int t_jumlahBel = Integer.parseInt(jumlahBel.getText());
+            int t_total = t_jumlahBel * t_harga;
+            total.setText(String.valueOf(t_total));
+        } catch (NumberFormatException ex) {
+            total.setText("0");
+        }
+    }
+
+    private void updateUangKembali() {
+        try {
+            int t_total = Integer.parseInt(total.getText());
+            int t_bayar = Integer.parseInt(uangB.getText());
+            int t_uangK = t_bayar - t_total;
+            uangK.setText(String.valueOf(t_uangK));
+        } catch (NumberFormatException ex) {
+            uangK.setText("");
+        }
+    }
+
+    private void cetakTiket() {
+        data.setText(
+                "----------- Tiketing Bus -----------\n" +
+                        "Nomor Kursi     : " + noKursi.getText() + "\n" +
+                        "Nama Penumpang  : " + namaPenum.getText() + "\n" +
+                        "Jumlah Pembelian: " + jumlahBel.getText() + "\n" +
+                        "Total Harga     : " + total.getText() + "\n" +
+                        "Uang Bayar      : " + uangB.getText() + "\n" +
+                        "Uang Kembali    : " + uangK.getText());
+    }
+
+    private void exitApplication() {
+        int answer = JOptionPane.showConfirmDialog(null, "Anda Yakin Keluar?", "Keluar", JOptionPane.OK_OPTION);
+        if (answer == JOptionPane.OK_OPTION) {
+            System.exit(0);
+        }
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("AppTiketBus");
+        frame.setContentPane(new AppTiketBus().panelutama);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+    }
 }
