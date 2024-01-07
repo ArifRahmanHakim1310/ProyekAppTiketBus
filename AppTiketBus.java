@@ -33,7 +33,7 @@ public class AppTiketBus {
     private JLabel db_total;
     private JLabel db_uangB;
     private JLabel db_uangK;
-    private JPanel panelutama;
+    public JPanel panelutama;
 
 
     private int vipPrice;
@@ -247,12 +247,4 @@ public class AppTiketBus {
         }
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("AppTiketBus");
-        frame.setContentPane(new AppTiketBus().panelutama);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setSize(800, 600);
-        frame.setVisible(true);
-    }
 }
