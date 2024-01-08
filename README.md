@@ -15,4 +15,6 @@ program ini di buat sangat sederhana, dimana program ketikan di run langsung men
 dan untuk pelanggan tinggal memasukan data bus dan data penumpang, kemudian dari data tersebut kita bisa langsung bisa mencetak tiket dan mendapatkan informasi
 mengenai tiket yang di pesan.
 
+Link Penjelasa di Youtub : https://youtu.be/6_r0Q-TOYD4?si=Mjh9e-1r9l4B8vAu
+
 software : Intelij idea
