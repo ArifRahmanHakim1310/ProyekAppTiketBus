@@ -1,0 +1,7 @@
+----------- Tiketing Bus -----------
+Nomor Kursi     : 22
+Nama Penumpang  : tio
+Jumlah Pembelian: 1
+Total Harga     : 700000
+Uang Bayar      : 800000
+Uang Kembali    : 100000
